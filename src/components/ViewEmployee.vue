@@ -13,6 +13,9 @@
 
 <script>
 import db from './firebaseInit'
+db.settings({
+  timestampsInSnapshots: true
+});
 export default {
     name: 'view-employee',
     data () {
@@ -35,7 +38,7 @@ export default {
         })
     },
     watch: {
-        '$route': 'fetchData'
+        '$route': 'fetchData',
     },
     methods: {
         fetchData() {
@@ -43,15 +46,16 @@ export default {
                 this.employee_id = doc.data().employee_id
                 this.name = doc.data().name
                 this.dept = doc.data().dept
-                this.position = doc.data().position   
+                this.position = doc.data().position
             })
         },
         deleteEmployee() {
             if(confirm('Are You Sure?')){
-            db.collection('employees').doc(this.$root.params.employee_id).get().then(function(doc) {
-                doc.ref.delete()
-                this.$router('/')
-            })
+                var ID = (this.$route.params.employee_id);
+                console.log(ID)
+                db.collection('employees').doc(ID).delete().then(function () {
+                    this.$router.push('/')
+                })
             }
         }
     }
