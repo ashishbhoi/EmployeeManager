@@ -8,6 +8,11 @@
         </ul>
         <router-link to="/" class="btn grey">Back</router-link>
         <button @click="deleteEmployee" class="btn red">Delete</button>
+        <div class="fixed-action-btn">
+            <router-link class="btn-floating btn-large waves-effect waves-light red" v-bind:to="{name: 'edit-employee', params: {employee_id: id}}">
+                <i class="fa fa-pencil-alt"></i>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -20,6 +25,7 @@ export default {
     name: 'view-employee',
     data () {
         return {
+            id: null,
             employee_id: null,
             name: null,
             dept: null,
@@ -34,6 +40,7 @@ export default {
                     vm.name = doc.data().name
                     vm.dept = doc.data().dept
                     vm.position = doc.data().position
+                    vm.id = doc.id
                 })
         })
     },
@@ -47,12 +54,12 @@ export default {
                 this.name = doc.data().name
                 this.dept = doc.data().dept
                 this.position = doc.data().position
+                this.id = doc.id
             })
         },
         deleteEmployee() {
             if(confirm('Are You Sure?')){
                 var ID = (this.$route.params.employee_id);
-                console.log(ID)
                 db.collection('employees').doc(ID).delete().then(function () {
                     this.$router.push('/')
                 })
