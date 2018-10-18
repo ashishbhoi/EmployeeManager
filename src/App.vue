@@ -10,7 +10,7 @@
 <script>
 import Navbar from './components/Navbar'
 import Vue from 'vue'
-Vue.config.devtools = true
+
 export default {
   name: 'App',
   components: {
