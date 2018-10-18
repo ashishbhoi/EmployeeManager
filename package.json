@@ -10,7 +10,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.4.1",
     "firebase": "^5.5.4",
+    "jquery": "^3.3.1",
     "materialize-css": "^1.0.0-rc.2",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"

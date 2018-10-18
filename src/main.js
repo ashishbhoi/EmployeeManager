@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'materialize-css/dist/css/materialize.css'
+import 'jquery/dist/jquery.js'
+import 'materialize-css/dist/js/materialize.js'
+import '@fortawesome/fontawesome-free/css/all.css'
 
 Vue.config.productionTip = false
 
