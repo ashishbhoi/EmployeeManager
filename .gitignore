@@ -16,3 +16,4 @@ yarn-error.log*
 # Firebase Directoyr and Files
 .firebaserc
 .firebase/
+src/components/firebaseConfig.js
