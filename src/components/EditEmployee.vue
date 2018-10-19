@@ -17,7 +17,7 @@
                 </div>
             </div>
             <button type="submit" class="btn waves-effect waves-light">Submit<i class="fa fa-paper-plane right"></i></button>
-            <router-link to="/" class="btn grey">Cancel<i class="fa fa-times-circle right"></i></router-link>
+            <button @click="CancelEdit" class="btn grey">Cancel<i class="fa fa-times-circle right"></i></button>
         </form>
     </div>
 </template>
@@ -73,7 +73,11 @@ export default {
         }).then(() => {
             this.$router.push({name: 'view-employee', params: ID})
         })
-     }   
+     },
+     CancelEdit() {
+         var ID = (this.$route.params.employee_id);
+         this.$router.push({name: 'view-employee', params: ID})
+     }
     }
 }
 </script>
