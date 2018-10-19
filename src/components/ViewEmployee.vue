@@ -6,8 +6,8 @@
             <li class="collection-item">Department : {{dept}}</li>
             <li class="collection-item">Position : {{position}}</li>
         </ul>
-        <router-link to="/" class="btn grey">Back</router-link>
-        <button @click="deleteEmployee" class="btn red">Delete</button>
+        <router-link to="/" class="btn grey">Back<i class="fa fa-angle-double-left left"></i></router-link>
+        <button @click="deleteEmployee" class="btn red">Delete<i class="fa fa-trash-alt right"></i></button>
         <div class="fixed-action-btn">
             <router-link class="btn-floating btn-large waves-effect waves-light red" v-bind:to="{name: 'edit-employee', params: {employee_id: id}}">
                 <i class="fa fa-pencil-alt"></i>

@@ -20,8 +20,8 @@
                     <label>Position</label>
                 </div>
             </div>
-            <button type="submit" class="btn">Submit</button>
-            <router-link to="/" class="btn grey">Cancel</router-link>
+            <button type="submit" class="btn">Submit<i class="fa fa-paper-plane right"></i></button>
+            <router-link to="/" class="btn grey">Cancel<i class="fa fa-times-circle right"></i></router-link>
         </form>
     </div>
 </template>

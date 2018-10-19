@@ -6,7 +6,7 @@
                 <div class="chip">{{employee.dept}}</div>{{employee.employee_id}}:{{employee.name}}
 
                 <router-link class="secondary-content" v-bind:to="{name: 'view-employee', params: {employee_id: employee.id}}">
-                    <i class="fa fa-eye"></i>
+                    <i class="fa fa-eye fa-lg"></i>
                 </router-link>
             </li>
         </ul>
