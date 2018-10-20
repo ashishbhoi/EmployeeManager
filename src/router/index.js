@@ -7,6 +7,8 @@ import EditEmployee from '@/components/EditEmployee'
 import Login from '@/components/Login'
 import Reginster from '@/components/Register'
 import firebase from 'firebase'
+import verefy from '@/components/Verefy'
+import verefied from '@/components/Verefied'
 
 
 Vue.use(Router)
@@ -18,7 +20,8 @@ let router =  new Router({
       name: 'dashboard',
       component: Dashboard, 
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresConfirm: true
       }
     },
     {
@@ -38,11 +41,30 @@ let router =  new Router({
       }
     },
     {
+      path: '/verefy',
+      name: 'verefy',
+      component: verefy,
+      meta: {
+        requiresAuth: true,
+        realtimeVerefication: true
+      }
+    },
+    {
+      path: '/verefied',
+      name: 'verefied',
+      component: verefied, 
+      meta: {
+        requiresAuth: true,
+        requiresConfirm: true
+      }
+    },
+    {
       path: '/new',
       name: 'new-employee',
       component: NewEmployee,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresConfirm: true
       }
     },
     {
@@ -50,7 +72,8 @@ let router =  new Router({
       name: 'view-employee',
       component: ViewEmployee,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresConfirm: true
       }
     },
     {
@@ -58,7 +81,8 @@ let router =  new Router({
       name: 'edit-employee',
       component: EditEmployee,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
+        requiresConfirm: true
       }
     }
   ]
@@ -76,32 +100,68 @@ router.beforeEach((to, from, next) => {
         query: {
           redirect: to.path
         }
-      });
+      })
     }
-    else{
-      //Procced to route
-      next();
+    else {
+      next()
     }
   }
-  else if(to.matched.some(record => record.meta.requiresGuest)) {
+  if(to.matched.some(record => record.meta.requiresGuest)) {
     // Chaeck if Logged In
     if(firebase.auth().currentUser) {
-      // Go to Login page
       next({
         path: '/',
         query: {
           redirect: to.path
         }
-      });
+      })
     }
     else{
       //Procced to route
-      next();
+      next()
     }
+  }
+  if(to.matched.some(record => record.meta.requiresConfirm)) {
+    if(firebase.auth().currentUser){
+      firebase.auth().onAuthStateChanged(user => {
+        if(!user.emailVerified) {
+          firebase.auth().currentUser.sendEmailVerification()
+          next({
+            path: '/verefy',
+            query: {
+              redirect: to.path
+            }
+          })
+        }
+        else {
+          next()
+        }
+      })
+    }
+  }
+  if(to.matched.some(record => record.meta.realtimeVerefication)) {
+    firebase.auth().onAuthStateChanged(user => {
+      if(!user.emailVerified) {
+        next({
+          path: '/verefy',
+          query: {
+            redirect: to.path
+          }
+        })
+      }
+      else {
+        next({
+          path: '/verefied',
+          query: {
+            redirect: to.fullPath
+          }
+        })
+      }
+    })
   }
   else {
     //Procced to route
-    next();
+    next()
   }
 })
 

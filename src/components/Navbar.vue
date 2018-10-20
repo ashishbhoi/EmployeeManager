@@ -4,8 +4,8 @@
             <div class="container">
                 <router-link to="/" class="brand-logo left">Employee Manager</router-link>
                 <ul id="nav-mobile" class="right">
-                    <li v-if="isLogedIn" class="email black-text">{{currentUser}}</li>
-                    <li v-if="isLogedIn"><router-link to="/">Dashboard</router-link></li>
+                    <li v-if="isVerefied" class="email black-text">{{currentUser}}</li>
+                    <li v-if="isVerefied"><router-link to="/">Dashboard</router-link></li>
                     <li v-if="!isLogedIn"><router-link to="/login">Login</router-link></li>
                     <li v-if="!isLogedIn"><router-link to="/register">Register</router-link></li>
                     <li v-if="isLogedIn"><button v-on:click="logout" class="btn black">Logout</button></li>
@@ -22,13 +22,24 @@ export default {
     data() {
         return {
             isLogedIn: false,
-            currentUser: false
+            currentUser: false,
+            isVerefied: false
         }
     },
     created() {
         if(firebase.auth().currentUser) {
             this.isLogedIn = true
             this.currentUser = firebase.auth().currentUser.email
+            firebase.auth().onAuthStateChanged(user => {
+                if(!user.emailVerified) {
+                    this.isVerefied = false
+                    
+                }
+                else {
+                    this.isVerefied = true
+                }
+            })
+            
         }
     },
     methods: {
