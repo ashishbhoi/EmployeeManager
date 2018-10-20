@@ -21,6 +21,9 @@
 
 <script>
 import db from './firebaseInit'
+db.settings({
+  timestampsInSnapshots: true
+});
 export default {
     name: 'dashboard',
     data () {
